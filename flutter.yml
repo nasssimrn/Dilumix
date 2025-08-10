@@ -1,0 +1,20 @@
+name: Flutter CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.10.5'
+      - run: flutter pub get
+      - run: flutter build apk --debug
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
